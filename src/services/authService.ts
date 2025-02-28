@@ -26,7 +26,7 @@ export const register = async (userData: RegisterData): Promise<void> => {
   try {
     console.log('Registration request data:', userData); // Add logging
     await api.post('/register', userData);
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Registration API error:', error.response?.data); // Add error logging
     throw new Error(error.response?.data?.message || 'Registration failed');
   }
@@ -34,9 +34,9 @@ export const register = async (userData: RegisterData): Promise<void> => {
 
 export const login = async (email: string, password: string): Promise<LoginResponse> => {
   try {
-    const { data } = await api.post('/login', { email, password });
+    const { data } = await api.post<LoginResponse>('/login', { email, password });
     return data;
-  } catch (error: any) {
+  } catch (error: unknown) {
     throw new Error(error.response?.data?.message || 'Login failed');
   }
 };

@@ -17,7 +17,7 @@ const Register = () => {
   const [form, setForm] = useState({
     firstName: "",
     lastName: "",
-    phoneNumber: "", // Changed from phone to phoneNumber
+    phoneNumber: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -41,9 +41,11 @@ const Register = () => {
       await register(form);
       alert("Registration successful! Please login.");
       navigate("/login");
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Registration error:", error); // Add error logging
-      setError(error.message);
+      setError(
+        error instanceof Error ? error.message : "An unexpected error occurred"
+      );
     }
   };
 
@@ -94,7 +96,7 @@ const Register = () => {
                 required
               />
               <Input
-                name="phoneNumber" // Changed from phone to phoneNumber
+                name="phoneNumber"
                 placeholder="Phone Number"
                 onChange={handleChange}
                 required
